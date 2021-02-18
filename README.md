@@ -7,7 +7,10 @@ pip install gitlab-issue-delete
 
 delete all issue from gitlab project.
 
+usage
+```
 $ gilab-issue-delete
+```
 
 and follow the instruction
 
