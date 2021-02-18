@@ -3,3 +3,6 @@ __pycache__/
 *.pyc
 env/
 setup.py
+build/
+dist/
+gitlab_issue_delete.egg-info/
