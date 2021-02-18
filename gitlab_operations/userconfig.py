@@ -1,4 +1,6 @@
-from gitinstance import GitInstance
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+from gitlab_operations.gitinstance import GitInstance
 
 
 class UserConfig(GitInstance):

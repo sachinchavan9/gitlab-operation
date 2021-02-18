@@ -1,4 +1,6 @@
-from userconfig import UserConfig
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+from gitlab_operations.userconfig import UserConfig
 import gitlab
 import os
 from prettytable import PrettyTable
@@ -129,5 +131,5 @@ class Remover(UserConfig):
             exit(0)
 
 
-if __name__ == "__main__":
+def main():
     Remover()
