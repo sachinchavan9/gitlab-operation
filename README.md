@@ -9,7 +9,7 @@ delete all issue from gitlab project.
 
 usage
 ```
-$ gilab-issue-delete
+$ gitlab-issue-delete
 ```
 
 and follow the instruction
