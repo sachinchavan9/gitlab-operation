@@ -1,5 +1,4 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
+#!/usr/bin python
 from gitlab_operations.gitinstance import GitInstance
 
 
