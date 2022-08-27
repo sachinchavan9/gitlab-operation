@@ -16,6 +16,11 @@ $ gitlab-issue-delete
 
 ## or: Run directly from repository
 
+To install all needed python modules, run
+```
+python3 -m pip install -r requirements.txt
+```
+
 From the base path of this repository, execute:
 ```
 python3 -c "import gitlab_operations.deleteissue; gitlab_operations.deleteissue.main()"
