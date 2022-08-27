@@ -5,6 +5,7 @@ import os
 from prettytable import PrettyTable
 import json
 import sys
+import re
 
 import warnings
 warnings.filterwarnings("ignore")
@@ -39,7 +40,10 @@ class Remover(UserConfig):
         try:
             gitman = self.gitman(
                 url=self.url, token=self.token, ssl_verify=False)
-            self._get_projects(gitman)
+            confirm_printprojects = input(
+                '\nDo you want to list all available projects? (y/N): ')
+            if confirm_printprojects.lower() == "y":
+                self._get_projects(gitman)
             self._project_id = int(input('\nProject ID: '))
             print(
                 '\n[-] counting issues from project id: {}'.format(self._project_id))
@@ -85,8 +89,21 @@ class Remover(UserConfig):
             print('\n[x] no issues for erase\n')
             exit(0)
 
+        # optional issue title filtering
+        search_pattern_regex = input(
+            '\nIf you want to only delete certain issues, enter a regex pattern to filter the issue title for, leave blank to apply no filtering: '
+        )
+        if search_pattern_regex == "":
+            search_pattern_regex = ".*"
+        r = re.compile(search_pattern_regex)
+        filtered_issues = [x for x in issues if r.match(x.title)]
+        #filtered_issues = list(filter(r.match, issues))
+        print(f"\nThe following issues are gonna be deleted from the repository:")
+        for printissue in filtered_issues:
+            print(f"{printissue.iid}: {printissue.title}")
+        
         confirm = input(
-            '\nAre you sure to erase issues from GitLab project ID#{} (y/N): '.format(project_id))
+            '\nAre you sure to erase the above listed {} issues from GitLab project ID#{} (y/N): '.format(len(filtered_issues), project_id))
         if not confirm:
             print('\n[x] good bye!\n')
             exit(0)
@@ -97,14 +114,14 @@ class Remover(UserConfig):
             current_counter = 0
             COUNTER = 1
 
-            total_iteration = ai
+            total_iteration = len(filtered_issues)
 
             sys.stdout.write("|{}|".format("-" * 100))
             sys.stdout.flush()
             sys.stdout.write("\b" * 101)
             # -------------------------------------------------------------------------
 
-            for i in issues:
+            for i in filtered_issues:
                 status_bar_string = "{} of {} ".format(
                     COUNTER, total_iteration)
                 sys.stdout.write(status_bar_string)
